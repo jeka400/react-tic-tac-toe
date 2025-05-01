@@ -1,0 +1,11 @@
+  .board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.status {
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: bold;
+}
