@@ -1,12 +1,9 @@
 import React from 'react';
-import Board from './components/Board';
+import Game from './components/Game';
 
 function App() {
   return (
-      <>
-        <h1>Let's play Tic Tac Toe!</h1>
-        <Board />
-      </>
+    <Game />
   );
 }
 
