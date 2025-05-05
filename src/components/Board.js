@@ -4,43 +4,53 @@ import Square from "./Square";
 import "../style/Board.scss";
 
 const Board = ({ xIsNext, squares, onPlay }) => {
+  const winnerInfo = calculateWinner(squares);
+  const winningLine = winnerInfo?.line;
+  const winner = winnerInfo?.winner;
+  const isDraw = !winner && squares.every(Boolean);
+
   const handleClick = (i) => {
-    if (squares[i] || calculateWinner(squares)) {
+    if (squares[i] || winner) {
       return;
     }
 
     const newSquaresArray = squares.slice();
     newSquaresArray[i] = xIsNext ? "X" : "O";
-    onPlay(newSquaresArray);
+    onPlay(newSquaresArray, i);
   };
 
-  const winner = calculateWinner(squares);
+  const isWinningSquare = (i) => winningLine?.includes(i);
 
-  let status = winner
+  const status = winner
     ? "Winner is: " + winner
+    : isDraw
+    ? "It's a draw!"
     : "Next player is: " + (xIsNext ? "X" : "O");
+
+  const renderSquare = (i) => (
+    <Square
+      value={ squares[i] }
+      onSquareClick={ () => handleClick(i) }
+      xIsNext={ xIsNext }
+      isWinningSquare={ isWinningSquare(i) }
+    />
+  );
 
   return (
     <>
       <div className="status">{ status }</div>
       
       <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+        {renderSquare(0)} {renderSquare(1)} {renderSquare(2)}
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+        {renderSquare(3)} {renderSquare(4)} {renderSquare(5)}
       </div>
       <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+        {renderSquare(6)} {renderSquare(7)} {renderSquare(8)}
       </div>
     </>
   );
-}
+};
 
 export default Board;

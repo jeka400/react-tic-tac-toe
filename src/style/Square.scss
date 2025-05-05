@@ -11,3 +11,17 @@
     padding: 0;
     text-align: center;
 }
+
+.winning-square {
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 5px #90ee90;
+    }
+    to {
+      box-shadow: 0 0 15px #388e3c;
+    }
+}
+  
